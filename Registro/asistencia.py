@@ -62,7 +62,7 @@ class Asistencia:
         for sesion in sesionesCurso:
             if fechaInicio <= datetime.strptime(sesion.fecha, "%d/%m/%Y") <= fechaFin:
                 tardanzasSesion = [asistencia.documentoEstudiante for asistencia in cls.asistencias 
-                                    if asistencia.codigoSesion == sesion.codigoSesion and asistencia.estado == '1']  # Ajustado aquí
+                                    if asistencia.codigoSesion == sesion.codigoSesion and asistencia.estado == '1']
                 for estudiante in tardanzasSesion:
                     if estudiante in estudiantesTardanzas:
                         estudiantesTardanzas[estudiante] += 1
