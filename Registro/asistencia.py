@@ -48,7 +48,7 @@ class Asistencia:
                 print("Número de Identidad: " + asistencia.documentoEstudiante)
 
     @classmethod
-    def listarTardanzasCursoRango(cls, codigoCurso, fechaInicio, fechaFin):
+    def listarTardanzasRango(cls, codigoCurso, fechaInicio, fechaFin):
         fechaInicio = datetime.strptime(fechaInicio, "%d/%m/%Y")
         fechaFin = datetime.strptime(fechaFin, "%d/%m/%Y")
         sesionesCurso = [sesion for sesion in Sesion.sesiones if sesion.codigoCurso == codigoCurso]
@@ -56,8 +56,22 @@ class Asistencia:
         if not sesionesCurso:
             print(f"No hay sesiones del curso {codigoCurso} en el rango de fechas dado.")
             return
+        
+        estudiantesTardanzas = {}
+        
         for sesion in sesionesCurso:
-            tardanzasSesion = [asistencia for asistencia in cls.asistencias 
-                                if asistencia.codigoSesion == sesion.codigoCurso and asistencia.estado == '1']
-            print(f"Sesión {sesion.codigoCurso} del {sesion.fecha}: {len(tardanzasSesion)} estudiantes llegaron tarde.")
-            
+            if fechaInicio <= datetime.strptime(sesion.fecha, "%d/%m/%Y") <= fechaFin:
+                tardanzasSesion = [asistencia.documentoEstudiante for asistencia in cls.asistencias 
+                                    if asistencia.codigoSesion == sesion.codigoSesion and asistencia.estado == '1']  # Ajustado aquí
+                for estudiante in tardanzasSesion:
+                    if estudiante in estudiantesTardanzas:
+                        estudiantesTardanzas[estudiante] += 1
+                    else:
+                        estudiantesTardanzas[estudiante] = 1
+        
+        if not estudiantesTardanzas:
+            print(f"No hubo estudiantes que llegaron tarde en el curso {codigoCurso} entre las fechas {fechaInicio.strftime('%d/%m/%Y')} y {fechaFin.strftime('%d/%m/%Y')}.")
+        else:
+            print(f"Cantidad de tardanzas por estudiante en el curso {codigoCurso}:")
+            for estudiante, cantidad in estudiantesTardanzas.items():
+                print(f"{estudiante}: {cantidad} veces")

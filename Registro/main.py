@@ -47,7 +47,7 @@ while True:
         codigoCurso = input("Ingrese el código del curso: ")
         fechaInicio = input("Ingrese la fecha de inicio (DD/MM/YYYY): ")
         fechaFin = input("Ingrese la fecha final (DD/MM/YYYY): ")
-        Asistencia.listarTardanzasCursoRango(codigoCurso, fechaInicio, fechaFin)
+        Asistencia.listarTardanzasRango(codigoCurso, fechaInicio, fechaFin)
     elif opcion == '11':
         print("Saliendo del programa...")
         break
