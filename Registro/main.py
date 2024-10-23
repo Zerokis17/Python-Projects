@@ -28,26 +28,26 @@ while True:
     elif opcion == '4':
         Asistencia.agregarAsistencia()
     elif opcion == '5':
-        documento_id = input("Ingrese el documento del estudiante: ")
-        Estudiante.listarEstudiante(documento_id)
+        documentoID = input("Ingrese el documento del estudiante: ")
+        Estudiante.listarEstudiante(documentoID)
     elif opcion == '6':
-        codigo_curso = input("Ingrese el código del curso: ")
-        Curso.listarCurso(codigo_curso)
+        codigoCurso = input("Ingrese el código del curso: ")
+        Curso.listarCurso(codigoCurso)
     elif opcion == '7':
-        codigo_sesion = input("Ingrese el código de la sesión: ")
-        Sesion.listarSesion(codigo_sesion)
+        codigoSesion = input("Ingrese el código de la sesión: ")
+        Sesion.listarSesion(codigoSesion)
     elif opcion == '8':
-        codigo_sesion = input("Ingrese el código de la sesión: ")
-        documento_estudiante = input("Ingrese el documento del estudiante: ")
-        Asistencia.listarAsistencia(codigo_sesion, documento_estudiante)
+        codigoSesion = input("Ingrese el código de la sesión: ")
+        documentoEstudiante = input("Ingrese el documento del estudiante: ")
+        Asistencia.listarAsistencia(codigoSesion, documentoEstudiante)
     elif opcion == '9':
-        codigo_sesion = input("Ingrese el código de la sesión: ")
-        Asistencia.listarTardanzasSesion(codigo_sesion)
+        codigoSesion = input("Ingrese el código de la sesión: ")
+        Asistencia.listarTardanzasSesion(codigoSesion)
     elif opcion == '10':
-        codigo_curso = input("Ingrese el código del curso: ")
-        fecha_inicio = input("Ingrese la fecha de inicio (DD/MM/YYYY): ")
-        fecha_fin = input("Ingrese la fecha final (DD/MM/YYYY): ")
-        Asistencia.listarTardanzasCursoRango(codigo_curso, fecha_inicio, fecha_fin)
+        codigoCurso = input("Ingrese el código del curso: ")
+        fechaInicio = input("Ingrese la fecha de inicio (DD/MM/YYYY): ")
+        fechaFin = input("Ingrese la fecha final (DD/MM/YYYY): ")
+        Asistencia.listarTardanzasCursoRango(codigoCurso, fechaInicio, fechaFin)
     elif opcion == '11':
         print("Saliendo del programa...")
         break

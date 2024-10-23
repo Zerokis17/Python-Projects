@@ -24,3 +24,4 @@ class Curso:
         else:
             for curso in filtrados:
                 print(curso)
+                
