@@ -7,7 +7,6 @@ class Curso:
     def __str__(self):
         return f"Código: {self.codigoCurso}, Nombre: {self.nombreCurso}, Estudiantes: {len(self.estudiantes)}"
 
-
 class Estudiante:
     def __init__(self, documentoIdentidad, nombre, curso):
         self.documentoIdentidad = documentoIdentidad
@@ -16,7 +15,6 @@ class Estudiante:
 
     def __str__(self):
         return f"Nombre: {self.nombre}, Documento: {self.documentoIdentidad}, Curso: {self.curso.codigoCurso}"
-
 
 class Pila:
     def __init__(self):
@@ -36,7 +34,7 @@ class Pila:
 
     def top(self):
         if not self.isEmpty():
-            return self.items[-1]
+            return self.items[len(self.items) - 1]
         else:
             print("La pila está vacía, no hay elementos.")
 
@@ -50,7 +48,6 @@ class Pila:
                 print(f"{i}. {item}")
         else:
             print("La pila está vacía, no hay elementos para listar.")
-
 
 class Queue:
     def __init__(self):
@@ -79,7 +76,6 @@ class Queue:
         else:
             print("La cola está vacía, no hay elementos para listar.")
 
-
 def main():
     cursos = []
     pilaCurso = Pila()
@@ -100,12 +96,13 @@ def main():
                     "Seleccione la opción que desea --> ")
 
         if opc == "1":
-            curso = Curso(input("Ingrese el código del curso: "), input("Ingrese el nombre del curso: "))
+            curso = Curso(input("Ingrese el codigo del curso: "), input("Ingrese el nombre del curso: "))
             cursos.append(curso)
             print("Curso agregado correctamente.\n")
 
         elif opc == "2":
             codigoCurso = input("Ingrese el código del curso al que desea agregar el estudiante: ")
+            # Buscamos el curso en la lista de cursos
             cursoEncontrado = None
             for curso in cursos:
                 if curso.codigoCurso == codigoCurso:
@@ -121,15 +118,14 @@ def main():
             else:
                 print("Curso no encontrado. Asegúrese de que el código sea correcto.\n")
 
-        elif opc == "3":
+        if opc == "3":
             for curso in cursos:
                 pilaCurso.push(curso)
             print("Cursos agregados a la pila.\n")
 
         elif opc == "4":
-            cursoExtraido = pilaCurso.pop()
-            if cursoExtraido:
-                print(f"Curso sacado de la pila: {cursoExtraido}\n")
+            cursoExtraido = cursos.pop()            
+            print(f"Curso sacado de la pila: {cursoExtraido}\n")
 
         elif opc == "5":
             pilaCurso.listar()
@@ -141,8 +137,7 @@ def main():
 
         elif opc == "7":
             cursoExtraido = colaCurso.dequeue()
-            if cursoExtraido:
-                print(f"Curso removido de la cola: {cursoExtraido}\n")
+            print(f"Curso removido de la cola: {cursoExtraido}\n")
 
         elif opc == "8":
             colaCurso.listar()
@@ -152,7 +147,6 @@ def main():
 
         else:
             print("Opción no válida. Inténtelo de nuevo.\n")
-
 
 if __name__ == "__main__":
     main()
