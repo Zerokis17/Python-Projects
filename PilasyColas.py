@@ -5,9 +5,6 @@ class Curso:
         self.codigoCurso = codigoCurso
         self.nombreCurso = nombreCurso
         self.estudiantes = []
-    
-    def adicionarEstudiante(self,estudiante):
-        self.estudiantes.append(estudiante)
 
 class Estudiante:
     def __init__(self, documentoIdentidad, nombre, curso):
@@ -76,15 +73,15 @@ class Queue:
             print("La cola está vacía, no hay elementos para listar.")
 
 def main():
-    pilaEstudiantes = Pila() 
-    colaEstudiantes = Queue()
+    pilaCursos = Pila() 
+    colaCursos = Queue()
     curso = Curso("","")
     opc = ""
 
     while opc != "9":
         opc = input("************ Estructuras de datos (Pilas y Colas) ***************\n"
                     "1. Adicionar un curso\n"
-                    "2. Adicionar un estudiante al curso"
+                    "2. Adicionar un estudiante al curso\n"
                     "3. Adicionar el curso a la pila\n"
                     "4. Sacar un curso de la pila y mostrar los datos\n"
                     "5. Listar todos los cursos de la pila sin sacarlos\n"
@@ -96,19 +93,15 @@ def main():
 
         if opc == "1":
             curso = Curso(input("Ingrese el codigo del curso: "), input("Ingrese el nombre del curso: "))
-            print("Curso agregado correctame")
+            print("Curso agregado correctamente.\n")
 
         elif opc == "2":
-            curso.estudiantes.append(input("Ingrese nombre del estudiante"))
-            print("Estudiante agregado al curso.")
+            curso.estudiantes.append(Estudiante(input("Ingrese documento de identidad del estudiante: "), input("Ingrese el nombre del estudiante: "), input("Ingrese el codigo del curso: ")))
+            print("Estudiante agregado al curso.\n")
 
         if opc == "3":
-            doc = input("Ingrese el documento del estudiante: ")
-            nom = input("Ingrese los nombres del estudiante: ")
-            ape = input("Ingrese los apellidos del estudiante: ")
-            estudiante = Item(doc, nom, ape)
-            pilaEstudiantes.push(estudiante)
-            print("Estudiante agregado a la pila.\n")
+            pilaCursos.push(curso)
+            print("Curso agregado a la pila.\n")
 
         elif opc == "4":
             estudiante = pilaEstudiantes.pop()
