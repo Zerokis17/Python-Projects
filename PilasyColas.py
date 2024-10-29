@@ -1,16 +1,22 @@
-import sys
-
 class Curso:
     def __init__(self, codigoCurso, nombreCurso):
         self.codigoCurso = codigoCurso
         self.nombreCurso = nombreCurso
         self.estudiantes = []
 
+    def __str__(self):
+        return f"Código: {self.codigoCurso}, Nombre: {self.nombreCurso}, Estudiantes: {len(self.estudiantes)}"
+
+
 class Estudiante:
     def __init__(self, documentoIdentidad, nombre, curso):
         self.documentoIdentidad = documentoIdentidad
         self.nombre = nombre
         self.curso = curso
+
+    def __str__(self):
+        return f"Nombre: {self.nombre}, Documento: {self.documentoIdentidad}, Curso: {self.curso.codigoCurso}"
+
 
 class Pila:
     def __init__(self):
@@ -30,7 +36,7 @@ class Pila:
 
     def top(self):
         if not self.isEmpty():
-            return self.items[len(self.items) - 1]
+            return self.items[-1]
         else:
             print("La pila está vacía, no hay elementos.")
 
@@ -44,6 +50,7 @@ class Pila:
                 print(f"{i}. {item}")
         else:
             print("La pila está vacía, no hay elementos para listar.")
+
 
 class Queue:
     def __init__(self):
@@ -72,10 +79,11 @@ class Queue:
         else:
             print("La cola está vacía, no hay elementos para listar.")
 
+
 def main():
-    pilaCursos = Pila() 
-    colaCursos = Queue()
-    curso = Curso("","")
+    cursos = []
+    pilaCurso = Pila()
+    colaCurso = Queue()
     opc = ""
 
     while opc != "9":
@@ -92,42 +100,52 @@ def main():
                     "Seleccione la opción que desea --> ")
 
         if opc == "1":
-            curso = Curso(input("Ingrese el codigo del curso: "), input("Ingrese el nombre del curso: "))
+            curso = Curso(input("Ingrese el código del curso: "), input("Ingrese el nombre del curso: "))
+            cursos.append(curso)
             print("Curso agregado correctamente.\n")
 
         elif opc == "2":
-            curso.estudiantes.append(Estudiante(input("Ingrese documento de identidad del estudiante: "), input("Ingrese el nombre del estudiante: "), input("Ingrese el codigo del curso: ")))
-            print("Estudiante agregado al curso.\n")
+            codigoCurso = input("Ingrese el código del curso al que desea agregar el estudiante: ")
+            cursoEncontrado = None
+            for curso in cursos:
+                if curso.codigoCurso == codigoCurso:
+                    cursoEncontrado = curso
+                    break
 
-        if opc == "3":
-            pilaCursos.push(curso)
-            print("Curso agregado a la pila.\n")
+            if cursoEncontrado:
+                documentoIdentidad = input("Ingrese documento de identidad del estudiante: ")
+                nombreEstudiante = input("Ingrese el nombre del estudiante: ")
+                estudiante = Estudiante(documentoIdentidad, nombreEstudiante, cursoEncontrado)
+                cursoEncontrado.estudiantes.append(estudiante)
+                print("Estudiante agregado al curso.\n")
+            else:
+                print("Curso no encontrado. Asegúrese de que el código sea correcto.\n")
+
+        elif opc == "3":
+            for curso in cursos:
+                pilaCurso.push(curso)
+            print("Cursos agregados a la pila.\n")
 
         elif opc == "4":
-            estudiante = pilaEstudiantes.pop()
-            if estudiante:
-                print(f"Estudiante sacado de la pila: {estudiante}\n")
+            cursoExtraido = pilaCurso.pop()
+            if cursoExtraido:
+                print(f"Curso sacado de la pila: {cursoExtraido}\n")
 
         elif opc == "5":
-            pilaEstudiantes.listar()
-            print()
+            pilaCurso.listar()
 
         elif opc == "6":
-            doc = input("Ingrese el documento del estudiante: ")
-            nom = input("Ingrese los nombres del estudiante: ")
-            ape = input("Ingrese los apellidos del estudiante: ")
-            estudiante = Item(doc, nom, ape)
-            colaEstudiantes.enqueue(estudiante)
-            print("Estudiante agregado a la cola.\n")
+            for curso in cursos:
+                colaCurso.enqueue(curso)
+            print("Cursos agregados a la cola.\n")
 
         elif opc == "7":
-            estudiante = colaEstudiantes.dequeue()
-            if estudiante:
-                print(f"Estudiante sacado de la cola: {estudiante}\n")
+            cursoExtraido = colaCurso.dequeue()
+            if cursoExtraido:
+                print(f"Curso removido de la cola: {cursoExtraido}\n")
 
         elif opc == "8":
-            colaEstudiantes.listar()
-            print()
+            colaCurso.listar()
 
         elif opc == "9":
             print("Saliendo del programa...")
@@ -135,5 +153,6 @@ def main():
         else:
             print("Opción no válida. Inténtelo de nuevo.\n")
 
+
 if __name__ == "__main__":
-    sys.exit(main())
+    main()
