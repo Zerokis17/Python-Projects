@@ -1,17 +1,19 @@
 import sys
 
-class Item:
-    documento = ""
-    nombres = ""
-    apellidos = ""
+class Curso:
+    def __init__(self, codigoCurso, nombreCurso):
+        self.codigoCurso = codigoCurso
+        self.nombreCurso = nombreCurso
+        self.estudiantes = []
+    
+    def adicionarEstudiante(self,estudiante):
+        self.estudiantes.append(estudiante)
 
-    def __init__(self, doc, nom, ape):
-        self.documento = doc
-        self.nombres = nom
-        self.apellidos = ape
-
-    def __str__(self):
-        return f"Documento: {self.documento}, Nombres: {self.nombres}, Apellidos: {self.apellidos}"
+class Estudiante:
+    def __init__(self, documentoIdentidad, nombre, curso):
+        self.documentoIdentidad = documentoIdentidad
+        self.nombre = nombre
+        self.curso = curso
 
 class Pila:
     def __init__(self):
@@ -76,20 +78,31 @@ class Queue:
 def main():
     pilaEstudiantes = Pila() 
     colaEstudiantes = Queue()
+    curso = Curso("","")
     opc = ""
 
-    while opc != "7":
+    while opc != "9":
         opc = input("************ Estructuras de datos (Pilas y Colas) ***************\n"
-                    "1. Adicionar un estudiante a la pila\n"
-                    "2. Sacar un estudiante de la pila y mostrar los datos\n"
-                    "3. Listar todos los elementos de la pila sin sacarlos\n"
-                    "4. Adicionar un estudiante a la cola\n"
-                    "5. Sacar un estudiante de la cola y mostrar los datos\n"
-                    "6. Listar todos los elementos de la cola sin sacarlos\n"
-                    "7. Salir\n"
+                    "1. Adicionar un curso\n"
+                    "2. Adicionar un estudiante al curso"
+                    "3. Adicionar el curso a la pila\n"
+                    "4. Sacar un curso de la pila y mostrar los datos\n"
+                    "5. Listar todos los cursos de la pila sin sacarlos\n"
+                    "6. Adicionar un curso a la cola\n"
+                    "7. Sacar un curso de la cola y mostrar los datos\n"
+                    "8. Listar todos los cursos de la cola sin sacarlos\n"
+                    "9. Salir\n"
                     "Seleccione la opción que desea --> ")
 
         if opc == "1":
+            curso = Curso(input("Ingrese el codigo del curso: "), input("Ingrese el nombre del curso: "))
+            print("Curso agregado correctame")
+
+        elif opc == "2":
+            curso.estudiantes.append(input("Ingrese nombre del estudiante"))
+            print("Estudiante agregado al curso.")
+
+        if opc == "3":
             doc = input("Ingrese el documento del estudiante: ")
             nom = input("Ingrese los nombres del estudiante: ")
             ape = input("Ingrese los apellidos del estudiante: ")
@@ -97,16 +110,16 @@ def main():
             pilaEstudiantes.push(estudiante)
             print("Estudiante agregado a la pila.\n")
 
-        elif opc == "2":
+        elif opc == "4":
             estudiante = pilaEstudiantes.pop()
             if estudiante:
                 print(f"Estudiante sacado de la pila: {estudiante}\n")
 
-        elif opc == "3":
+        elif opc == "5":
             pilaEstudiantes.listar()
             print()
 
-        elif opc == "4":
+        elif opc == "6":
             doc = input("Ingrese el documento del estudiante: ")
             nom = input("Ingrese los nombres del estudiante: ")
             ape = input("Ingrese los apellidos del estudiante: ")
@@ -114,16 +127,16 @@ def main():
             colaEstudiantes.enqueue(estudiante)
             print("Estudiante agregado a la cola.\n")
 
-        elif opc == "5":
+        elif opc == "7":
             estudiante = colaEstudiantes.dequeue()
             if estudiante:
                 print(f"Estudiante sacado de la cola: {estudiante}\n")
 
-        elif opc == "6":
+        elif opc == "8":
             colaEstudiantes.listar()
             print()
 
-        elif opc == "7":
+        elif opc == "9":
             print("Saliendo del programa...")
 
         else:
