@@ -104,8 +104,70 @@ def movimiento_maquina():
     return fila, col
 
 
-# Funcion principal del juego
-def jugar_triki():
+# Funcion para jugar contra otro jugador
+def jugar_j1_vs_j2():
+    global jugadas  # Asegurarse de que las jugadas de la partida actual esten en el ambito global
+    global tablero
+    tablero = [[' ' for _ in range(3)] for _ in range(3)]  # Reiniciar el tablero para cada partida
+    jugadas = []  # Limpiar jugadas de la partida actual
+    
+    jugador = 'X'  # El jugador humano siempre comienza
+    while True:
+        mostrar_tablero()
+        print(f"Turno del jugador {jugador}")
+        
+        if jugador == 'X':  # El jugador 1 hace su jugada
+            try:
+                fila = int(input("Ingresa la fila (1, 2, 3): ")) - 1
+                col = int(input("Ingresa la columna (1, 2, 3): ")) - 1
+            except ValueError:
+                print("Coordenadas no validas. Intenta nuevamente.")
+                continue
+            
+            # Validar que la posicion este vacia
+            if 0 <= fila < 3 and 0 <= col < 3 and tablero[fila][col] == ' ':
+                tablero[fila][col] = jugador
+                jugadas.append((fila + 1, col + 1))  # Almacenar la jugada con coordenadas del 1 al 3
+            else:
+                print("Esa posicion ya esta ocupada o no es valida. Intenta de nuevo.")
+                continue
+        else:  # El jugador 2 hace su jugada
+            try:
+                fila = int(input("Ingresa la fila (1, 2, 3): ")) - 1
+                col = int(input("Ingresa la columna (1, 2, 3): ")) - 1
+            except ValueError:
+                print("Coordenadas no validas. Intenta nuevamente.")
+                continue
+            
+            # Validar que la posicion este vacia
+            if 0 <= fila < 3 and 0 <= col < 3 and tablero[fila][col] == ' ':
+                tablero[fila][col] = jugador
+                jugadas.append((fila + 1, col + 1))  # Almacenar la jugada con coordenadas del 1 al 3
+            else:
+                print("Esa posicion ya esta ocupada o no es valida. Intenta de nuevo.")
+                continue
+        
+        # Verificar si hay ganador o empate
+        ganador = verificar_ganador()
+        if ganador:
+            mostrar_tablero()
+            print(f"¡Jugador {ganador} ha ganado!")
+            partidas.append({"jugadas": list(jugadas), "resultado": f"Ganador {ganador}"})
+            guardar_partidas()
+            break
+        elif verificar_empate():
+            mostrar_tablero()
+            print("¡Es un empate!")
+            partidas.append({"jugadas": list(jugadas), "resultado": "Empate"})
+            guardar_partidas()
+            break
+        
+        # Cambiar de jugador
+        jugador = 'O' if jugador == 'X' else 'X'
+
+
+# Funcion para jugar contra la maquina
+def jugar_j1_vs_maquina():
     global jugadas  # Asegurarse de que las jugadas de la partida actual esten en el ambito global
     global tablero
     tablero = [[' ' for _ in range(3)] for _ in range(3)]  # Reiniciar el tablero para cada partida
@@ -135,7 +197,6 @@ def jugar_triki():
             fila, col = movimiento_maquina()
             tablero[fila][col] = jugador
             jugadas.append((fila + 1, col + 1))  # Almacenar la jugada con coordenadas del 1 al 3
-            print(f"La maquina jugo en la posicion ({fila + 1}, {col + 1})")
         
         # Verificar si hay ganador o empate
         ganador = verificar_ganador()
@@ -155,25 +216,26 @@ def jugar_triki():
         # Cambiar de jugador
         jugador = 'O' if jugador == 'X' else 'X'
 
-# Menu de opciones
-def menu():
-    while True:
-        print("\n--- Menu ---")
-        print("1. J1 vs J2 (guardar empate o partida ganada)")
-        print("2. Jugar contra la maquina")
-        print("3. Salir")
-        
-        opcion = input("Seleccione una opcion: ")
-        
-        if opcion == '1':
-            jugar_triki()
-        elif opcion == '2':
-            jugar_triki() 
-        elif opcion == '3':
-            print("Saliendo del juego.")
-            break
-        else:
-            print("Opcion no valida. Intente de nuevo.")
 
-# Iniciar el menu
-menu()
+# Menú principal
+while True:
+    print("\nMenú de opciones:")
+    print("1. Jugar contra otro jugador")
+    print("2. Jugar contra la máquina")
+    print("3. Salir")
+
+    try:
+        opcion = int(input("Selecciona una opción: "))
+    except ValueError:
+        print("Opción no válida. Intenta de nuevo.")
+        continue
+
+    if opcion == 1:
+        jugar_j1_vs_j2()
+    elif opcion == 2:
+        jugar_j1_vs_maquina()
+    elif opcion == 3:
+        print("¡Hasta luego!")
+        break
+    else:
+        print("Opción no válida. Intenta de nuevo.")
