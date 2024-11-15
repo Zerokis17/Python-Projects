@@ -1,10 +1,6 @@
 import os
 import json
 
-# Crear la carpeta 'partidas_empate' si no existe
-if not os.path.exists("partidas_empate"):
-    os.makedirs("partidas_empate")
-
 # Inicializar variables
 tablero = [[' ' for _ in range(3)] for _ in range(3)]
 jugadas = []              # Lista para almacenar las coordenadas de cada jugada en la partida actual
@@ -12,7 +8,7 @@ partidas = []             # Arreglo para almacenar todas las partidas registrada
 
 # Cargar el archivo JSON si existe y agregar partidas
 def cargar_partidas():
-    archivo = "partidas_empate/partidas_empate.json"
+    archivo = "partidas_empate.json"
     if os.path.exists(archivo):
         with open(archivo, 'r') as f:
             return json.load(f)
@@ -49,7 +45,7 @@ def verificar_empate():
 
 # Función para guardar todas las partidas en el archivo JSON
 def guardar_partidas():
-    archivo = "partidas_empate/partidas_empate.json"
+    archivo = "partidas_empate.json"
     
     with open(archivo, 'w') as f:
         json.dump(partidas, f, indent=4)
